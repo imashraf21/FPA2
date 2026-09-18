@@ -1,3 +1,9 @@
+import "./Movies.css";
+
 export default function Movies() {
-	return <div>Movies</div>;
+	return (
+		<section className="movies-page">
+			<h2>Popular Movies</h2>
+		</section>
+	);
 }
