@@ -34,7 +34,7 @@ export const FEATURED_IMDB_IDS = [
 	"tt0258463", // #33 Parasite
 	"tt0114814", // #34 The Usual Suspects
 	"tt0172495", // #35 Gladiator
-	"tt0108052", // #36 Lion King (or Harakiri: tt0056058)
+	"tt0110357", // #36 Lion King (or Harakiri: tt0056058)
 	"tt0110413", // #37 Léon: The Professional
 	"tt0120586", // #38 American History X
 	"tt0054215", // #39 Psycho

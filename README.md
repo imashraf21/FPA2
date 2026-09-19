@@ -29,7 +29,42 @@ The app uses the [OMDb API](https://www.omdbapi.com/) exclusively. Two endpoints
 - **Lookup by IMDb ID** (`i=`) — returns full details for a single movie (title, year, poster, IMDb rating, plot).
 - **Search by title** (`s=`) — returns a lightweight list of matches (title, year, imdbID, poster) for a given query, with no rating or plot.
 
-OMDb does not provide a "popular" or "trending" movies list, so the app's default Movies page view is populated by fetching full details for a fixed, curated set of well-known IMDb IDs (see `FEATURED_IMDB_IDS` in `src/data/featuredMovies.js`). Search results additionally fetch full details per match, since the search endpoint alone doesn't return rating or plot data.
+OMDb does not provide a "popular" or "trending" movies list, so the app's default Movies page view is populated by fetching full details for a fixed, curated set of well-known IMDb IDs (see `FEATURED_IMDB_IDS` in `src/data/featuredMovies.js`).
+
+### Searching Movies by Title
+
+The search bar on the Movies page calls `searchMovies(query)` in `src/api/omdb.js`, which hits:
+
+```
+https://www.omdbapi.com/?apikey=KEY&s={query}&type=movie
+```
+
+This returns a lightweight list of matches — no rating or plot included:
+
+```json
+{
+	"Search": [
+		{
+			"Title": "Batman Begins",
+			"Year": "2005",
+			"imdbID": "tt0372784",
+			"Type": "movie",
+			"Poster": "https://m.media-amazon.com/images/M/MV5BOD.../poster.jpg"
+		},
+		{
+			"Title": "The Batman",
+			"Year": "2022",
+			"imdbID": "tt1877830",
+			"Type": "movie",
+			"Poster": "https://m.media-amazon.com/images/M/MV5BMD.../poster.jpg"
+		}
+	],
+	"totalResults": "530",
+	"Response": "True"
+}
+```
+
+Each result's `imdbID` is then looped over sequentially with a `for...of` loop to call `fetchMoviesById(imdbID)` (the `i=` lookup endpoint), awaiting one detail request at a time and pushing each into the results array. The final array returned to the Movies page is the same full shape used by `getPopularMovies()`.
 
 ## Project Structure
 

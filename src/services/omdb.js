@@ -42,7 +42,9 @@ export async function searchMovies(query) {
 		);
 	}
 
-	const res = await fetch(`${BASE_URL}?apikey=${API_KEY}&s=${query}`);
+	const res = await fetch(
+		`${BASE_URL}?apikey=${API_KEY}&s=${query}&type=movie`,
+	);
 
 	if (!res.ok) {
 		throw new Error(`OMDb request failed: ${res.status}`);
@@ -54,5 +56,11 @@ export async function searchMovies(query) {
 		return [];
 	}
 
-	return data;
+	const result = [];
+	for (const item of data?.Search || []) {
+		const movie = await fetchMoviesById(item.imdbID);
+		result.push(movie);
+	}
+
+	return result;
 }
