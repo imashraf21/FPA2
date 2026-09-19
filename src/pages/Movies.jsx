@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import "./Movies.css";
 import Card from "../components/Card";
 import { getPopularMovies } from "../services/omdb";
+import "./Movies.css";
+import Modal from "../components/Modal";
 
 export default function Movies() {
 	const [movies, setMovies] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const [selectedMovie, setSelectedMovie] = useState(null);
 
 	useEffect(() => {
 		let isLoaded = true;
@@ -35,9 +37,20 @@ export default function Movies() {
 
 			<div className="movies-grid">
 				{movies.map((movie) => (
-					<Card key={movie.imdbID} movie={movie} />
+					<Card
+						key={movie.imdbID}
+						movie={movie}
+						onClick={() => setSelectedMovie(movie)}
+					/>
 				))}
 			</div>
+
+			{selectedMovie && (
+				<Modal
+					movie={selectedMovie}
+					onClose={() => setSelectedMovie(null)}
+				/>
+			)}
 		</section>
 	);
 }
