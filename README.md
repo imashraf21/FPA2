@@ -31,6 +31,12 @@ The app uses the [OMDb API](https://www.omdbapi.com/) exclusively. Two endpoints
 
 OMDb does not provide a "popular" or "trending" movies list, so the app's default Movies page view is populated by fetching full details for a fixed, curated set of well-known IMDb IDs (see `FEATURED_IMDB_IDS` in `src/data/featuredMovies.js`).
 
+### Hero Banner Background
+
+OMDb has no dedicated backdrop/banner image field — `Poster` is the only image OMDb returns for a movie. The Home page's hero banner works around this by using a movie poster as the background image instead of a true widescreen backdrop.
+
+On mount, `Home.jsx` picks a random IMDb ID from a fixed list (`HERO_IMDB_IDS` in `src/data/heroPoster.js`) and fetches that movie's poster.
+
 ### Searching Movies by Title
 
 The search bar on the Movies page calls `searchMovies(query)` in `src/api/omdb.js`, which hits:
@@ -64,7 +70,7 @@ This returns a lightweight list of matches — no rating or plot included:
 }
 ```
 
-Each result's `imdbID` is then looped over sequentially with a `for...of` loop to call `fetchMoviesById(imdbID)` (the `i=` lookup endpoint), awaiting one detail request at a time and pushing each into the results array. The final array returned to the Movies page is the same full shape used by `getPopularMovies()`.
+Each result's `imdbID` is then mapped through `Promise.all` to call `fetchMoviesById(imdbID)` (the `i=` lookup endpoint) in parallel, returning full details — `imdbRating`, `Plot`, etc. — for every match at once. The final array returned to the Movies page is the same full shape used by `getPopularMovies()`.
 
 ## Project Structure
 

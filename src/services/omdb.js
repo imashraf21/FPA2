@@ -3,7 +3,7 @@ import { FEATURED_IMDB_IDS } from "../data/featuredMovies";
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 const BASE_URL = "https://www.omdbapi.com/";
 
-async function fetchMoviesById(imdbID) {
+export async function fetchMoviesById(imdbID) {
 	const res = await fetch(
 		`${BASE_URL}?apikey=${API_KEY}&i=${imdbID}&plot=short`,
 	);
@@ -56,11 +56,15 @@ export async function searchMovies(query) {
 		return [];
 	}
 
-	const result = [];
-	for (const item of data?.Search || []) {
-		const movie = await fetchMoviesById(item.imdbID);
-		result.push(movie);
-	}
+	// const result = [];
+	// for (const item of data?.Search || []) {
+	// 	const movie = await fetchMoviesById(item.imdbID);
+	// 	result.push(movie);
+	// }
+
+	const result = await Promise.all(
+		data?.Search.map((movie) => fetchMoviesById(movie.imdbID)),
+	);
 
 	return result;
 }
