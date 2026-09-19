@@ -3,10 +3,11 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Movies from "./pages/Movies";
+import "./App.css";
 
 function App() {
 	return (
-		<div>
+		<div className="app-layout">
 			<Navbar />
 			<Routes>
 				<Route path="/" element={<Home />} />
