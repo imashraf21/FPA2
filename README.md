@@ -29,7 +29,7 @@ The app uses the [OMDb API](https://www.omdbapi.com/) exclusively. Two endpoints
 - **Lookup by IMDb ID** (`i=`) — returns full details for a single movie (title, year, poster, IMDb rating, plot).
 - **Search by title** (`s=`) — returns a lightweight list of matches (title, year, imdbID, poster) for a given query, with no rating or plot.
 
-OMDb does not provide a "popular" or "trending" movies list, so the app's default Movies page view is populated by fetching full details for a fixed, curated set of well-known IMDb IDs (see `FEATURED_IMDB_IDS` in `src/services/omdb.js`). Search results additionally fetch full details per match, since the search endpoint alone doesn't return rating or plot data.
+OMDb does not provide a "popular" or "trending" movies list, so the app's default Movies page view is populated by fetching full details for a fixed, curated set of well-known IMDb IDs (see `FEATURED_IMDB_IDS` in `src/data/featuredMovies.js`). Search results additionally fetch full details per match, since the search endpoint alone doesn't return rating or plot data.
 
 ## Project Structure
 
@@ -46,16 +46,18 @@ movie-app/
     ├── App.jsx               # Root layout: Navbar + Routes + Footer
     ├── App.css
     ├── index.css             # Global styles
-    ├── services/
-    │   └── omdb.js           # All OMDb API calls (fetch by ID, search by title)
     ├── components/
     │   ├── Navbar.jsx / .css
     │   ├── Footer.jsx / .css
     │   ├── Card.jsx / .css
     │   └── Modal.jsx / .css
-    └── pages/
-        ├── Home.jsx / .css   # Hero banner with "Browse Movies" button
-        └── Movies.jsx / .css # Search bar + movie grid + modal wiring
+    ├── data/
+    │   └── featuredMovies.js # A list of Top 50 IMDb movie titles
+    ├── pages/
+    │   ├── Home.jsx / .css   # Hero banner with "Browse Movies" button
+    │   └── Movies.jsx / .css # Search bar + movie grid + modal wiring
+    └── services/
+        └── omdb.js           # All OMDb API calls (fetch by ID, search by title)
 ```
 
 ## Prerequisites
