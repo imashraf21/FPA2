@@ -7,8 +7,8 @@ export default function Home() {
 	return (
 		<section className="hero">
 			<div className="hero-content">
-				<h1>Unlimited Movies, Anytime!</h1>
-				<p>Discover trending and popular films powered by OMDb.</p>
+				<h1>Uncover Your Next Great Watch</h1>
+				<p>Discover popular movies powered by OMDb.</p>
 				<button
 					className="browse-btn"
 					onClick={() => navigate("/movies")}
