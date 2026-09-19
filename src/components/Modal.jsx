@@ -5,7 +5,7 @@ export default function Modal({ movie, onClose }) {
 
 	return (
 		<div className="modal" onClick={onClose}>
-			<div className="modal-content">
+			<div className="modal-content" onClick={(e) => e.stopPropagation()}>
 				<div className="modal-backdrop-wrapper">
 					<img className="modal-backdrop" src={Poster} alt={Title} />
 				</div>
