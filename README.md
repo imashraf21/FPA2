@@ -93,7 +93,8 @@ movie-app/
     │   ├── Card.jsx / .css
     │   └── Modal.jsx / .css
     ├── data/
-    │   └── featuredMovies.js # A list of Top 50 IMDb movie titles
+    │   ├── featuredMovies.js # A list of Top 50 IMDb movie IDs
+    │   └── heroPoster.js     # A list of 5 IMDb movie IDs
     ├── pages/
     │   ├── Home.jsx / .css   # Hero banner with "Browse Movies" button
     │   └── Movies.jsx / .css # Search bar + movie grid + modal wiring
