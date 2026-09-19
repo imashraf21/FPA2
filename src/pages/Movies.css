@@ -48,3 +48,11 @@
 .search-bar button:hover {
 	background-color: #b8070f;
 }
+
+.status-text {
+	color: #b3b3b3;
+}
+
+.status-text.error {
+	color: #e50914;
+}

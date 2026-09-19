@@ -7,6 +7,7 @@ import Modal from "../components/Modal";
 export default function Movies() {
 	const [movies, setMovies] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [searching, setSearching] = useState(false);
 	const [error, setError] = useState(null);
 	const [query, setQuery] = useState("");
 	const [selectedMovie, setSelectedMovie] = useState(null);
@@ -35,15 +36,14 @@ export default function Movies() {
 		e.preventDefault();
 		const trimmed = query.trim();
 
-		setLoading(true);
+		setSearching(true);
 		setError(null);
 
 		try {
 			const res = await searchMovies(trimmed);
 			setMovies(res);
 			setHeading(`Results for "${trimmed}".`);
-			console.log(trimmed);
-			console.log(movies);
+			setQuery("");
 
 			if (res.length === 0) {
 				setError(`No movies found for "${trimmed}".`);
@@ -52,7 +52,7 @@ export default function Movies() {
 			setError(err.message);
 			setMovies([]);
 		} finally {
-			setLoading(false);
+			setSearching(false);
 		}
 	};
 
@@ -70,8 +70,9 @@ export default function Movies() {
 				<button type="submit">Search</button>
 			</form>
 
-			{loading && <p>Loading Movies...</p>}
-			{error && <p>{error}</p>}
+			{loading && <p className="status-text">Loading Movies...</p>}
+			{searching && <p className="status-text">Searching Movies...</p>}
+			{error && <p className="status-text error">{error}</p>}
 
 			<div className="movies-grid">
 				{movies.map((movie) => (
